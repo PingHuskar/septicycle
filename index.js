@@ -16,6 +16,15 @@ const CycleProgress = Date.now() % septiCycle
 const minutesFromCycle = CycleProgress / milliseconds / minutesInAnHour
 const percentThisCycle = CycleProgress / septiCycle * 100
 
+const getFirstSaturdayFromYear = (year=new Date().getFullYear()) => {
+    let fsArr = [];
+    for (let month = 1; month <= 12; month++) {
+      let dow = new Date(`${year}-${month}`).getDay();
+      let daystofs = 7 - dow;
+      fsArr.push(new Date(`${year}-${month}-${daystofs}`).toLocaleDateString());
+    }
+    return fsArr;
+}
 
 module.exports = {
     NoOfResonatorsInAPortal
@@ -31,4 +40,5 @@ module.exports = {
     ,septiCycle
     ,CycleProgress
     ,percentThisCycle
+    ,getFirstSaturdayFromYear
 }
