@@ -1,9 +1,7 @@
-const sum = (arr) =>{
-  return arr.reduce((a,c) => a + c, 0)
-}
+const ss = require('simple-statistics')
 
 const GetNoOfAgentsRequired = (resonatorsArr) => {
-  if (!(sum(resonatorsArr))) return 0
+  if (!(ss.sum(resonatorsArr))) return 0
   let countL8 = resonatorsArr.filter(r => r == 8).length
   if (countL8 >= 4) return countL8
   let countL7 = resonatorsArr.filter(r => r == 7).length
@@ -31,6 +29,8 @@ const GetNoOfAgentsRequired = (resonatorsArr) => {
 const ResonatorLevel = [0,1,2,3,4,5,6,7,8]
 const NoOfResonatorsInAPortal = 8
 const rangeMod = ["", "LA", "SB"]
+
+const SecondSundayMedalIntroduced = new Date(`13 Feb 2022`)
 
 const daysbeforeFSLatesubmissions = 9
 const daysTillTuesday = 3
@@ -153,11 +153,21 @@ const CycleInYear = (year=new Date().getFullYear()) => {
   return cycleArr
 }
 
+const IsCurrentMonthPastSecondSunday = (d = new Date()) => {
+  const SecondSundayThisMonth = ordinalSundayInYear(d.getFullYear() ,`second`).at(d.getMonth())
+  return d > SecondSundayThisMonth
+}
+
+const MaxSecondSundayMedal = (d = new Date()) => {
+  const prevyear = (d.getFullYear() - SecondSundayMedalIntroduced.getFullYear()) * monthsInAYear -1
+  return prevyear + d.getMonth() + (IsCurrentMonthPastSecondSunday() ? 1 : 0)
+}
+
 module.exports = {
-    sum
-    ,NoOfResonatorsInAPortal
+    NoOfResonatorsInAPortal
     ,ResonatorLevel
     ,rangeMod
+    ,SecondSundayMedalIntroduced
     ,daysbeforeFSLatesubmissions
     ,daysTillTuesday
     ,daysInAWeek
@@ -188,4 +198,5 @@ module.exports = {
     ,filterWeekOfMonth
     ,ordinalSundayInYear
     ,CycleInYear
+    ,MaxSecondSundayMedal
 }
