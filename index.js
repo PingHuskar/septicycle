@@ -1,4 +1,5 @@
 const ss = require('simple-statistics')
+const cd = require('countdown')
 
 const GetNoOfAgentsRequired = (resonatorsArr) => {
   if (!(ss.sum(resonatorsArr))) return 0
@@ -46,6 +47,7 @@ const fiveHours = 5 * minutesInAnHour * secondsInAMinute * milliseconds
 
 const minutesFromCheckpoint = Date.now() % fiveHours / milliseconds / minutesInAnHour
 const OneDay = hoursInADay * minutesInAnHour * secondsInAMinute * milliseconds
+const OneWeek = OneDay * daysInAWeek
 const percentThisCheckpoint = Date.now() % fiveHours / fiveHours * 100
 const iMinutesToCheckpoint = minutesInAnHour*5 - minutesFromCheckpoint
 
@@ -163,6 +165,29 @@ const MaxSecondSundayMedal = (d = new Date()) => {
   return prevyear + d.getMonth() + (IsCurrentMonthPastSecondSunday() ? 1 : 0)
 }
 
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+function I2sDay(now = new Date(), start = 16, end = 21) {
+  const dayOfWeek = now.getDay();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const Tuesday = 2
+  if (dayOfWeek === Tuesday) {
+    if (hours >= start && hours < end) {
+      return `I2sDay Ending in ${end-hours-1} Hours ${minutesInAnHour-minutes} Minutes`; 
+    }
+  }
+  const daysUntilNextTuesday = (Tuesday + daysInAWeek - dayOfWeek) % daysInAWeek;
+  let tuesday = now.addDays(daysUntilNextTuesday)
+  return `Next I2sDay Starting in ${cd( new Date(tuesday.getFullYear(), tuesday.getMonth(), tuesday.getDate(), start) ).toString()}`;
+}
+
+console.log(I2sDay())
+
 module.exports = {
     NoOfResonatorsInAPortal
     ,ResonatorLevel
@@ -178,6 +203,7 @@ module.exports = {
     ,fiveHours
     ,minutesFromCheckpoint
     ,OneDay
+    ,OneWeek
     ,minutesFromCycle
     ,percentThisCheckpoint
     ,septiCycle
