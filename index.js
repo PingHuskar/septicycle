@@ -157,12 +157,20 @@ const CycleInYear = (year=new Date().getFullYear()) => {
 
 const IsCurrentMonthPastSecondSunday = (d = new Date()) => {
   const SecondSundayThisMonth = ordinalSundayInYear(d.getFullYear() ,`second`).at(d.getMonth())
-  return d > SecondSundayThisMonth
+  return d >= SecondSundayThisMonth
 }
 
 const MaxSecondSundayMedal = (d = new Date()) => {
+  if (d.getFullYear() < SecondSundayMedalIntroduced.getFullYear()) {
+    return 0
+  } 
+  else if (SecondSundayMedalIntroduced.getFullYear() == d.getFullYear() && d.getMonth() == SecondSundayMedalIntroduced.getMonth()) {
+    if (d.getDate() < SecondSundayMedalIntroduced.getDate()) {
+      return 0
+    }
+  }
   const prevyear = (d.getFullYear() - SecondSundayMedalIntroduced.getFullYear()) * monthsInAYear -1
-  return prevyear + d.getMonth() + (IsCurrentMonthPastSecondSunday() ? 1 : 0)
+  return prevyear + d.getMonth() + (IsCurrentMonthPastSecondSunday(d) ? 1 : 0)
 }
 
 Date.prototype.addDays = function(days) {
@@ -185,8 +193,6 @@ function I2sDay(now = new Date(), start = 16, end = 21) {
   let tuesday = now.addDays(daysUntilNextTuesday)
   return `Next I2sDay Starting in ${cd( new Date(tuesday.getFullYear(), tuesday.getMonth(), tuesday.getDate(), start) ).toString()}`;
 }
-
-console.log(I2sDay())
 
 module.exports = {
     NoOfResonatorsInAPortal
@@ -225,4 +231,5 @@ module.exports = {
     ,ordinalSundayInYear
     ,CycleInYear
     ,MaxSecondSundayMedal
+    ,I2sDay
 }
