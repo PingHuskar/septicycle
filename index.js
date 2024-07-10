@@ -1,14 +1,20 @@
 const ss = require("simple-statistics");
 const cd = require("countdown");
+const d3 = require('d3');
+
 
 const GlobalChallenges = {
   buriedmem: {
     start: `12 Apr 2024 16:00:00 UTC`,
     end: `6 May 2024 16:00:00 UTC`,
   },
+  sharedmem: {
+    start: `12 Jul 2024 16:00:00 UTC`,
+    end: `5 Aug 2024 16:00:00 UTC`,
+  },
 };
 
-const CDGlobalChallenge = (GlobalChallenge = GlobalChallenges.buriedmem) => {
+const CDGlobalChallenge = (GlobalChallenge = GlobalChallenges.sharedmem) => {
   const start = cd(new Date(), new Date(GlobalChallenge.start)).value;
   if (start > 0) {
     return (
@@ -30,6 +36,20 @@ const CDGlobalChallenge = (GlobalChallenge = GlobalChallenges.buriedmem) => {
     );
   }
 };
+
+const EstimateGlobalChallengeScore = (now = new Date(), GlobalChallenge = GlobalChallenges.sharedmem, target=10000) => {
+  const x = d3
+    .scaleLinear()
+    .domain([new Date(GlobalChallenge.start), new Date(GlobalChallenge.end)])
+    .range([0, target]);
+  let estimate = x(now);
+  if (estimate < 0) {
+    estimate = 0;
+  } else if (estimate > target) {
+    estimate = target;
+  }
+  return estimate;
+}
 
 const GetNoOfAgentsRequired = (resonatorsArr) => {
   if (!ss.sum(resonatorsArr)) return 0;
@@ -280,6 +300,21 @@ const BaseAP = {
   desfield: 750,
 };
 
+const GetLinkAP = (int_portals, AP = BaseAP.link) => {
+  return (int_portals < 2 ? 0 : int_portals === 2 ? 1 : 3 * (int_portals - 2)) *
+    AP
+}
+
+const GetFieldAP = (int_portals, AP = BaseAP.field) => {
+  return (int_portals < 3 ? 0 : 3 * (int_portals - 3) + 1) * AP;
+};
+
+const EsitmateBuriedmem = (arr_int_portals) => {
+  const link = arr_int_portals.map((i) => GetLinkAP(i, 2));
+  const field = arr_int_portals.map((i) => GetFieldAP(i, 5));
+  return ss.sum(link) + ss.sum(field);
+}
+
 const EstimateAP = (int_portals, recapMachina = true, multiplier = 1) => {
   if (int_portals % 1 !== 0) return undefined;
   const portalAP =
@@ -292,11 +327,8 @@ const EstimateAP = (int_portals, recapMachina = true, multiplier = 1) => {
       recapMachina ? BaseAP.recapMachina : 0 +
       BaseAP.desres * NoOfResonatorsInAPortal
     );
-  const linkAP =
-    (int_portals < 2 ? 0 : int_portals === 2 ? 1 : 3 * (int_portals - 2)) *
-    BaseAP.link;
-  const fieldAP =
-    (int_portals < 3 ? 0 : 3 * (int_portals - 3) + 1) * BaseAP.field;
+  const linkAP = GetLinkAP(int_portals);
+  const fieldAP = GetFieldAP(int_portals)
   const Total = portalAP + linkAP + fieldAP;
   return Total * multiplier;
 };
@@ -341,5 +373,9 @@ module.exports = {
   I2sDay,
   CDGlobalChallenge,
   BaseAP,
+  GetLinkAP,
+  GetFieldAP,
   EstimateAP,
+  EsitmateBuriedmem,
+  EstimateGlobalChallengeScore,
 };
