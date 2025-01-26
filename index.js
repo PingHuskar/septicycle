@@ -3,39 +3,9 @@ const cd = require("countdown");
 const d3 = require('d3');
 
 
-const GlobalChallenges = {
-  buriedmem: {
-    start: `12 Apr 2024 16:00:00 UTC`,
-    end: `6 May 2024 16:00:00 UTC`,
-  },
-  sharedmem: {
-    start: `12 Jul 2024 16:00:00 UTC`,
-    end: `5 Aug 2024 16:00:00 UTC`,
-  },
-};
+const GlobalChallenges = require("./src/GlobalChallenges")
 
-const CDGlobalChallenge = (GlobalChallenge = GlobalChallenges.sharedmem) => {
-  const start = cd(new Date(), new Date(GlobalChallenge.start)).value;
-  if (start > 0) {
-    return (
-      `Start in ` +
-      cd(new Date(), new Date(GlobalChallenge.start)).toLocaleString()
-    );
-  }
-  const end = cd(new Date(), new Date(GlobalChallenge.end)).value;
-  if (end > 0) {
-    return (
-      `Ends in ` +
-      cd(new Date(), new Date(GlobalChallenge.end)).toLocaleString()
-    );
-  } else {
-    return (
-      `Ended ` +
-      cd(new Date(), new Date(GlobalChallenge.end)).toLocaleString() +
-      ` Ago`
-    );
-  }
-};
+const CDGlobalChallenge = require("./src/CDGlobalChallenge");
 
 const EstimateGlobalChallengeScore = (now = new Date(), GlobalChallenge = GlobalChallenges.sharedmem, target=10000) => {
   const x = d3
@@ -51,31 +21,7 @@ const EstimateGlobalChallengeScore = (now = new Date(), GlobalChallenge = Global
   return estimate;
 }
 
-const GetNoOfAgentsRequired = (resonatorsArr) => {
-  if (!ss.sum(resonatorsArr)) return 0;
-  let countL8 = resonatorsArr.filter((r) => r == 8).length;
-  if (countL8 >= 4) return countL8;
-  let countL7 = resonatorsArr.filter((r) => r == 7).length;
-  if (countL7 >= 4) return countL7;
-  let countL6 = Math.ceil(resonatorsArr.filter((r) => r == 6).length / 2);
-  if (countL6 >= 3) return countL6;
-  let countL5 = Math.ceil(resonatorsArr.filter((r) => r == 5).length / 2);
-  if (countL5 >= 3) return countL5;
-  let countL4 = Math.ceil(resonatorsArr.filter((r) => r == 4).length / 4);
-  let countL3 = Math.ceil(resonatorsArr.filter((r) => r == 3).length / 4);
-  let countL2 = Math.ceil(resonatorsArr.filter((r) => r == 2).length / 4);
-  let countL1 = Math.ceil(resonatorsArr.filter((r) => r == 1).length / 8);
-  return Math.max(
-    countL1,
-    countL2,
-    countL3,
-    countL4,
-    countL5,
-    countL6,
-    countL7,
-    countL8
-  );
-};
+const GetNoOfAgentsRequired = require("./src/GetNoOfAgentsRequired");
 
 const ResonatorLevel = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const NoOfResonatorsInAPortal = 8;
@@ -86,10 +32,10 @@ const SecondSundayMedalIntroduced = new Date(`13 Feb 2022`);
 const daysbeforeFSLatesubmissions = 9;
 const daysTillTuesday = 3;
 
-const daysInAWeek = 7;
+const daysInAWeek = require("./src/daysInAWeek");
 const monthsInAYear = 12;
 
-const milliseconds = 1000;
+const milliseconds = require("./src/milliseconds");
 const secondsInAMinute = 60;
 const minutesInAnHour = 60;
 const hoursInADay = 24;
@@ -110,15 +56,7 @@ const CycleEnd = CycleStart + septiCycle;
 const minutesFromCycle = CycleProgress / milliseconds / minutesInAnHour;
 const percentThisCycle = (CycleProgress / septiCycle) * 100;
 
-const getFirstSaturdayFromYear = (year = new Date().getFullYear()) => {
-  let fsArr = [];
-  for (let month = 1; month <= monthsInAYear; month++) {
-    let dow = new Date(`${year}-${month}`).getDay();
-    let daystofs = daysInAWeek - dow;
-    fsArr.push(new Date(`${year}-${month}-${daystofs}`));
-  }
-  return fsArr;
-};
+const getFirstSaturdayFromYear = require("./src/getFirstSaturdayFromYear")
 
 const getFirstSaturdayDeadLine = (year = new Date().getFullYear()) => {
   return getFirstSaturdayFromYear(year).map(
@@ -141,34 +79,10 @@ const getFirstSundayDateOfTheYear = (year = new Date().getFullYear()) => {
   return FirstSundayDateOfTheYear;
 };
 
-const ordinalafter = (ordinal) => {
-  switch (ordinal.toLowerCase()) {
-    case "first":
-      return 1;
-    case "second":
-      return 1 + daysInAWeek;
-    case "third":
-      return 1 + daysInAWeek * 2;
-    case "forth":
-      return 1 + daysInAWeek * 3;
-  }
-};
-const ordinalbefore = (ordinal) => {
-  switch (ordinal.toLowerCase()) {
-    case "first":
-      return daysInAWeek;
-    case "second":
-      return daysInAWeek * 2;
-    case "third":
-      return daysInAWeek * 3;
-    case "forth":
-      return daysInAWeek * 4;
-  }
-};
+const ordinalafter = require("./src/ordinalafter");
+const ordinalbefore = require("./src/ordinalbefore");
 
-const unixTimestamp = (date = Date.now()) => {
-  return Math.floor(date / milliseconds);
-};
+const unixTimestamp = require("./src/unixTimestamp");
 
 const Checkpoint = () => {
   const decimalPlaces = 2;
