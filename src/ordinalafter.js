@@ -1,5 +1,5 @@
-const daysInAWeek = require("./daysInAWeek.js");
-const ordinalafter = (ordinal) => {
+import { daysInAWeek } from "./daysInAWeek.js";
+export const ordinalafter = (ordinal) => {
   switch (ordinal.toLowerCase()) {
     case "first":
       return 1;
@@ -11,5 +11,3 @@ const ordinalafter = (ordinal) => {
       return 1 + daysInAWeek * 3;
   }
 };
-
-module.exports = ordinalafter;

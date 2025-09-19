@@ -1,4 +1,6 @@
-const getFirstSaturdayFromYear = (year = new Date().getFullYear()) => {
+import { monthsInAYear } from "./monthsInAYear.js";
+import { daysInAWeek } from "./daysInAWeek.js";
+export const getFirstSaturdayFromYear = (year = new Date().getFullYear()) => {
   let fsArr = [];
   for (let month = 1; month <= monthsInAYear; month++) {
     let dow = new Date(`${year}-${month}`).getDay();
@@ -7,5 +9,3 @@ const getFirstSaturdayFromYear = (year = new Date().getFullYear()) => {
   }
   return fsArr;
 };
-
-module.exports = getFirstSaturdayFromYear;

@@ -1,4 +1,5 @@
-const ordinalbefore = (ordinal) => {
+import { daysInAWeek } from "./daysInAWeek.js";
+export const ordinalbefore = (ordinal) => {
   switch (ordinal.toLowerCase()) {
     case "first":
       return daysInAWeek;
@@ -10,4 +11,3 @@ const ordinalbefore = (ordinal) => {
       return daysInAWeek * 4;
   }
 };
-module.exports = ordinalbefore;

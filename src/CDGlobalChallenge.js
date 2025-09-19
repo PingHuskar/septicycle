@@ -1,5 +1,6 @@
-const cd = require("countdown");
-const GlobalChallenges = require("./GlobalChallenges")
+import cd from "countdown";
+import { GlobalChallenges } from "./GlobalChallenges.js";
+
 const CDGlobalChallenge = (GlobalChallenge = GlobalChallenges.sharedmem) => {
   const start = cd(new Date(), new Date(GlobalChallenge.start)).value;
   if (start > 0) {
@@ -22,4 +23,5 @@ const CDGlobalChallenge = (GlobalChallenge = GlobalChallenges.sharedmem) => {
     );
   }
 };
-module.exports = CDGlobalChallenge;
+
+export { CDGlobalChallenge };

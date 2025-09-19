@@ -1,1 +1,1 @@
-module.exports = 1000;
+export const milliseconds = 1000;

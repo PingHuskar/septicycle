@@ -1,3 +1,5 @@
+import * as ss from "simple-statistics";
+
 const GetNoOfAgentsRequired = (resonatorsArr) => {
   if (!ss.sum(resonatorsArr)) return 0;
   let countL8 = resonatorsArr.filter((r) => r == 8).length;
@@ -24,4 +26,4 @@ const GetNoOfAgentsRequired = (resonatorsArr) => {
   );
 };
 
-module.exports = GetNoOfAgentsRequired;
+export { GetNoOfAgentsRequired };

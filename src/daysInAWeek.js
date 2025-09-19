@@ -1,1 +1,1 @@
-module.exports = 7;
+export const daysInAWeek = 7;
