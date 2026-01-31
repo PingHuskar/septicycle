@@ -1,0 +1,62 @@
+// Type definitions for septicycle
+
+export interface BaseAPType {
+    deploy: number;
+    capture: number;
+    link: number;
+    field: number;
+    lastres: number;
+    recapMachina: number;
+    mod: number;
+    hack: number;
+    desres: number;
+    deslink: number;
+    desfield: number;
+}
+
+export const ResonatorLevel: number[];
+export const NoOfResonatorsInAPortal: number;
+export const rangeMod: string[];
+export const SecondSundayMedalIntroduced: Date;
+export const daysbeforeFSLatesubmissions: number;
+export const daysTillTuesday: number;
+export const daysInAWeek: number;
+export const milliseconds: number;
+export const secondsInAMinute: number;
+export const minutesInAnHour: number;
+export const hoursInADay: number;
+export const fiveHours: number;
+export const minutesFromCheckpoint: number;
+export const OneDay: number;
+export const OneWeek: number;
+export const percentThisCheckpoint: number;
+export const iMinutesToCheckpoint: number;
+export const septiCycle: number;
+export const CycleProgress: number;
+export const CycleStart: number;
+export const CycleEnd: number;
+export const minutesFromCycle: number;
+export const percentThisCycle: number;
+export const getFirstSaturdayFromYear: (year?: number) => Date[];
+export const getFirstSaturdayDeadLine: (year?: number) => Date[];
+export const getNextFirstSaturdayRegisterDate: (year?: number) => Date[];
+export const getFirstSundayDateOfTheYear: (year?: number) => Date;
+export const ordinalafter: (ordinal: string) => number;
+export const ordinalbefore: (ordinal: string) => number;
+export const unixTimestamp: (date?: number) => number;
+export const Checkpoint: () => string;
+export const GetNoOfAgentsRequired: (resonatorsArr: number[]) => number;
+export const getEverySundayInYear: (year?: number) => Date[];
+export const filterWeekOfMonth: (arr_days: Date[], ordinal: string) => Date[];
+export const ordinalSundayInYear: (year?: number, ordinal?: string) => Date[];
+export const CycleInYear: (year?: number) => number[];
+export const MaxSecondSundayMedal: (d?: Date) => number;
+export function I2sDay(now?: Date, start?: number, end?: number): string;
+export const CDGlobalChallenge: (GlobalChallenge?: any) => string;
+export const BaseAP: BaseAPType;
+export const GetLinkAP: (int_portals: number, AP?: number) => number;
+export const GetFieldAP: (int_portals: number, AP?: number) => number;
+export const EstimateAP: (int_portals: number, recapMachina?: boolean, multiplier?: number) => number | undefined;
+export const EstimateBuriedmem: (arr_int_portals: number[]) => number;
+export const EstimateGlobalChallengeScore: (now?: Date, GlobalChallenge?: any, target?: number) => number;
+export const checkpointNumberAtTime: (timestamp?: number) => number;

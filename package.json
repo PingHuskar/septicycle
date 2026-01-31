@@ -3,6 +3,7 @@
   "version": "1.1.16",
   "description": "septicycle, checkpoint, I2sDay, MaxSecondSundayMedal and many more",
   "main": "index.js",
+  "types": "septicycle.d.ts",
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
