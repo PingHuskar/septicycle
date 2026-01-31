@@ -42,13 +42,14 @@ import {
   GetLinkAP,
   GetFieldAP,
   EstimateAP,
-  EsitmateBuriedmem,
-  EstimateGlobalChallengeScore
+  EstimateBuriedmem,
+  EstimateGlobalChallengeScore,
+  checkpointNumberAtTime
 } from "./index.js";
 
 describe("septicycle exports", () => {
   test("ResonatorLevel is array of 9 levels", () => {
-    expect(ResonatorLevel).toEqual([0,1,2,3,4,5,6,7,8]);
+    expect(ResonatorLevel).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8]);
   });
 
   test("NoOfResonatorsInAPortal is 8", () => {
@@ -178,6 +179,29 @@ describe("septicycle exports", () => {
     expect(typeof Checkpoint()).toBe("string");
   });
 
+  test("checkpointNumberAtTime returns a number between 1 and 35", () => {
+    const num = checkpointNumberAtTime();
+    expect(typeof num).toBe("number");
+    expect(num).toBeGreaterThanOrEqual(1);
+    expect(num).toBeLessThanOrEqual(35);
+  });
+
+  test("checkpointNumberAtTime at cycle start returns 1", () => {
+    expect(checkpointNumberAtTime(CycleStart)).toBe(1);
+  });
+
+  test("checkpointNumberAtTime at 5 hours into cycle returns 2", () => {
+    expect(checkpointNumberAtTime(CycleStart + fiveHours)).toBe(2);
+  });
+
+  test("checkpointNumberAtTime at 10 hours into cycle returns 3", () => {
+    expect(checkpointNumberAtTime(CycleStart + 2 * fiveHours)).toBe(3);
+  });
+
+  test("checkpointNumberAtTime near cycle end returns 35", () => {
+    expect(checkpointNumberAtTime(CycleEnd - 1)).toBe(35);
+  });
+
   test("GetNoOfAgentsRequired returns a number", () => {
     expect(typeof GetNoOfAgentsRequired(10)).toBe("number");
   });
@@ -232,8 +256,8 @@ describe("septicycle exports", () => {
     expect(typeof EstimateAP(3)).toBe("number");
   });
 
-  test("EsitmateBuriedmem returns a number", () => {
-    expect(typeof EsitmateBuriedmem([3,4,5])).toBe("number");
+  test("EstimateBuriedmem returns a number", () => {
+    expect(typeof EstimateBuriedmem([3, 4, 5])).toBe("number");
   });
 
   test("EstimateGlobalChallengeScore returns a number", () => {

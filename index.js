@@ -37,8 +37,9 @@ import { BaseAP } from "./src/BaseAP.js";
 import { GetLinkAP } from "./src/GetLinkAP.js";
 import { GetFieldAP } from "./src/GetFieldAP.js";
 import { EstimateAP } from "./src/EstimateAP.js";
-import { EsitmateBuriedmem } from "./src/EsitmateBuriedmem.js";
+import { EstimateBuriedmem } from "./src/EstimateBuriedmem.js";
 import { EstimateGlobalChallengeScore } from "./src/EstimateGlobalChallengeScore.js";
+import { checkpointNumberAtTime } from "./src/checkpointNumberAtTime.js";
 
 export {
   ResonatorLevel,
@@ -84,6 +85,7 @@ export {
   GetLinkAP,
   GetFieldAP,
   EstimateAP,
-  EsitmateBuriedmem,
-  EstimateGlobalChallengeScore
+  EstimateBuriedmem,
+  EstimateGlobalChallengeScore,
+  checkpointNumberAtTime
 };
